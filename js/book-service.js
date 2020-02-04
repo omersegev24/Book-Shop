@@ -35,6 +35,7 @@ function removeBook(bookId) {
 }
 
 function addBook(name, price) {
+    if(gCurrLang === 'he') price /= 3.6;
     var book = _createBook(name, price);
     book.imgUrl = 'img/no-img.png';
     gBooks.push(book);
@@ -42,6 +43,7 @@ function addBook(name, price) {
 }
 
 function updateBook(bookId, bookPrice) {
+    if(gCurrLang === 'he') bookPrice /= 3.6;
     var idx = gBooks.findIndex(book => book.id === bookId)
     gBooks[idx].price = bookPrice;
     saveToStorage(KEY, gBooks);

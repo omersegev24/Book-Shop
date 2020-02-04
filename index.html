@@ -5,45 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Book Shop</title>
+    <title>Document</title>
     <link rel="stylesheet" href="main.css">
 </head>
 
 <body onload="onInit()">
 
     <header>
-        <a name="top"></a>
-        <h1>Book Shop</h1>
+        <select class="lang-select" onchange="onSetLang(this.value)">
+            <option value="en">English</option>
+            <option value="he">עברית</option>
+        </select>
+
+        <h1 data-trans="title">Book Shop</h1>
+
     </header>
 
-    <a class="create-book" onclick="onOpenAddModal()">Create new book</a>
+
+    <a class="create-book" data-trans="new-book" onclick="onOpenAddModal()">Create new book</a>
     <table class="book-table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th class="header-name" onclick="onSortByName()">Title</th>
-                <th class="header-price" onclick="onSortByPrice()">Price</th>
-                <th>Actions</th>
+                <th data-trans="table-id" >Id</th>
+                <th data-trans="table-title" class="header-name" onclick="onSortByName()">Title</th>
+                <th data-trans="table-price" class="header-price" onclick="onSortByPrice()">Price</th>
+                <th data-trans="action">Actions</th>
             </tr>
         </thead>
         <tbody class="book-table-body"></tbody>
     </table>
 
     <div class="btn-group">
-        <button onclick="onChangePage(-1)">Prev</button>
+        <button data-trans="prev" onclick="onChangePage(-1)">Prev</button>
         <div class="num-page-btns"></div>
-        <button onclick="onChangePage(1)">Next</button>
+        <button data-trans="next" onclick="onChangePage(1)">Next</button>
     </div>
 
 
     <section class="book-modal" hidden>
         <div class="book-modal-content">
-            <button class="btn btn-modal" onclick="onCloseModalDeatils()">x</button>
-            <h2>Book Details</h2>
+            <button class="btn btn-modal" onclick="onCloseModalDeatils()">X</button>
+            <h2 data-trans="details" >Book Details</h2>
             <img src="" alt="book img">
             <h3></h3>
-            <h4></h4>
-            <h5></h5>
+            <h4> <span data-trans="table-price">Price:</span> <span class="book-price-modal"></span></h4>
+            <h5> <span data-trans="rate"> Rate:</span> <span class="book-rate-modal"></span></h5>
             <button class="rate-plus" onclick="onSetRate(1)">+</button>
             <input class="rate-input" type="number" value="0" min="0" max="10" />
             <button class="rate-minus" onclick="onSetRate(0)">-</button>
@@ -53,24 +59,25 @@
     <section class="update-modal" hidden>
         <div class="update-modal-content">
             <h4></h4>
-            <h5>Enter new price.</h5>
-            <input class="price-input" type="number" placeholder="Enter new price">
-            <button onclick="onUpdateBook()">Update</button>
+            <h5 data-trans="new-price">Enter new price.</h5>
+            <input data-trans="new-price" class="price-input" type="number" placeholder="Enter new price">
+            <button data-trans="update" onclick="onUpdateBook()">Update</button>
         </div>
     </section>
 
     <section class="new-book-modal" hidden>
         <div class="new-book-modal-content">
             <button onclick="onCloseAddModal()" class="btn cancel-btn">X</button>
-            <h4>Enter new book name.</h4>
-            <input class="name-input" type="text" placeholder="Enter name">
-            <h5>Enter price.</h5>
+            <h4 data-trans="new-book" >Enter new book name.</h4>
+            <input data-trans="new-book" class="name-input" type="text" placeholder="Enter name">
+            <h5 data-trans="new-price" >Enter price.</h5>
             <input class="new-price-input" type="number" placeholder="Enter price">
-            <button onclick="onAddBook()">Add</button>
+            <button data-trans="add" onclick="onAddBook()">Add</button>
         </div>
     </section>
 
     <script src="js/storage-service.js"></script>
+    <script src="js/i18n-service.js"></script>
     <script src="js/book-service.js"></script>
     <script src="js/book-controller.js"></script>
 </body>

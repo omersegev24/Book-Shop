@@ -11,23 +11,24 @@ function renderBooks() {
         <tr> 
             <td>${book.id}</td>
             <td>${book.name}</td>
-            <td>${book.price}$ </td>
+            <td>${formatCurrency(book.price, getCurrLang())}</td>
             <td>
-            <button class="btn btn-read" title="Book Details" onclick="onShowBookDetails(event, ${book.id})">Read</button>
-            <button class="btn btn-update" title="Edit Book" onclick="onOpenUpdateModal(event, ${book.id})">Update</button>
-            <button class="btn btn-delete" onclick="onRemoveBook(event, ${book.id})">Delete</button>
+            <button data-trans="read" class="btn btn-read" title="Book Details" onclick="onShowBookDetails(event, ${book.id})"></button>
+            <button data-trans="update" class="btn btn-update" title="Edit Book" onclick="onOpenUpdateModal(event, ${book.id})"></button>
+            <button data-trans="delete" class="btn btn-delete" onclick="onRemoveBook(event, ${book.id})"></button>
             </td>
         </tr>`;
     });
     var elBookList = document.querySelector('.book-table-body');
     elBookList.innerHTML = strHTMLs.join('');
     renderBtnPages();
+    doTrans();
 }
 
-function renderBtnPages(){
+function renderBtnPages() {
     var buttonsNum = getBooksNum();
     var strHTMLs = '';
-    for(var i = 1; i <= buttonsNum; i++){
+    for (var i = 1; i <= buttonsNum; i++) {
         strHTMLs += `<button class="page-btn" onclick="onPickPage(${i})">${i}</button>`
     }
     var elbtnList = document.querySelector('.num-page-btns');
@@ -36,17 +37,18 @@ function renderBtnPages(){
 
 function onRemoveBook(event, bookId) {
     event.stopPropagation();
-    var isSure = confirm('Are you sure?');
+    var txt = (gCurrLang === 'en') ? 'Are you sure?' : 'אתה בטוח?';
+    var isSure = confirm(txt);
     if (isSure) {
         removeBook(bookId);
         renderBooks();
     }
 }
 
-function onOpenAddModal(){
+function onOpenAddModal() {
     document.querySelector('.new-book-modal').hidden = false;
 }
-function onCloseAddModal(){
+function onCloseAddModal() {
     document.querySelector('.new-book-modal').hidden = true;
 }
 
@@ -88,8 +90,8 @@ function onShowBookDetails(event, bookId) {
     var elModal = document.querySelector('.book-modal');
     elModal.querySelector('h3').innerText = book.name;
     elModal.querySelector('img').src = book.imgUrl;
-    elModal.querySelector('h4').innerText = `Price: ${book.price}$`;
-    elModal.querySelector('h5').innerText = `Rate: ${book.rate}`;
+    elModal.querySelector('h4 .book-price-modal').innerText = formatCurrency(book.price, getCurrLang());
+    elModal.querySelector('h5 .book-rate-modal').innerText = book.rate;
     elModal.hidden = false;
 }
 
@@ -103,15 +105,15 @@ function onSetRate(diff) {
     if (elInput.value === '10' && diff) return;
     (diff) ? elInput.value++ : elInput.value--;
     setRate(elInput.value);
-    document.querySelector('.book-modal h5').innerText = `Rate: ${elInput.value}`;
+    document.querySelector('.book-modal h5 .book-rate-modal').innerText = elInput.value;
 }
 
-function onSortByName(){
+function onSortByName() {
     sortByName();
     renderBooks();
 }
 
-function onSortByPrice(){
+function onSortByPrice() {
     sortByPrice();
     renderBooks();
 }
@@ -121,7 +123,19 @@ function onChangePage(diff) {
     renderBooks();
 }
 
-function onPickPage(value){
+function onPickPage(value) {
     pickPage(value);
+    renderBooks();
+}
+
+function onSetLang(lang) {
+    setLang(lang);
+    if (lang === 'he') {
+        document.body.classList.add('rtl');
+        document.title = 'מסמך'
+    } else {
+        document.body.classList.remove('rtl');
+        document.title = 'Document';
+    }
     renderBooks();
 }

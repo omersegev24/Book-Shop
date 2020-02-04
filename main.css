@@ -13,8 +13,23 @@ body {
     padding: 10px;
 }
 
+body.rtl {
+    direction: rtl;
+}
+body.rtl .lang-select{
+    right: 3px;
+    left: initial;
+}
+
 header {
     text-align: center;
+}
+
+.lang-select {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: initial;
 }
 
 .book-table {
@@ -40,7 +55,7 @@ tr {
     padding: 8px;
 }
 
-img{
+img {
     width: 90%;
 }
 
@@ -152,11 +167,11 @@ input:focus {
     margin: 1rem;
 }
 
-.header-name, .header-price{
+.header-name, .header-price {
     cursor: pointer;
 }
 
-.new-book-modal-content, .update-modal-content{
+.new-book-modal-content, .update-modal-content {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap-reverse;
@@ -172,17 +187,17 @@ input:focus {
     width: fit-content;
 }
 
-.num-page-btns .btn{
+.num-page-btns .btn {
     display: inline;
     color: black;
-    
 }
 
-.btn-group{
+.btn-group {
     display: flex;
     justify-content: flex-end;
 }
-.btn-page{
+
+.btn-page {
     width: fit-content;
     height: fit-content;
 }
